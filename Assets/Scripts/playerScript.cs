@@ -5,11 +5,14 @@ using UnityEngine.UI;
 
 public class playerScript : MonoBehaviour {
 
+    public static bool inSafeZone;
+    public static bool paused;
     public Text spiderAttachedText;
     public Image screenBlock1;
     public Image screenBlock2;
     public Image screenBlock3;
     private int spidersAttached = 0;
+    
     
 
 	// Use this for initialization
@@ -19,7 +22,18 @@ public class playerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        spiderAttachedText.text = "Spiders Attached: " + spidersAttached;
+        if (Input.GetKeyDown("1") && !paused)
+        {
+            Time.timeScale = 0;
+            paused = true;
+            Debug.Log("paused");
+        }
+        else if (Input.GetKeyDown("1") && paused)
+        {
+            Time.timeScale = 1;
+            paused = false;
+            Debug.Log("unpaused");
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,7 +41,10 @@ public class playerScript : MonoBehaviour {
         if (other.tag == "Enemy")
         {
             spidersAttached += 1;
+            spiderAttachedText.text = "Spiders Attached: " + spidersAttached;
+            Debug.Log(other.name);
             other.gameObject.SetActive(false);
+
 
             if (spidersAttached == 1)
             {
@@ -41,8 +58,32 @@ public class playerScript : MonoBehaviour {
             {
                 screenBlock3.gameObject.SetActive(true);
             }
+            if (spidersAttached == 4)
+            {
+                // Trigger GAME OVER screen
+                Debug.Log("GAME OVER");
+            }
+        }
 
-            Debug.Log(other.name);
+        if (other.tag == "Safe Zone")
+        {
+            inSafeZone = true;
+            Debug.Log("inSafeZone = " + inSafeZone);
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Safe Zone")
+        {
+            inSafeZone = false;
+            Debug.Log("inSafeZone = " + inSafeZone);
+        }
+    }
+
+    private void DetachSpider()
+    {
+        //if (spidersAttached == 1);
+    }
+
 }

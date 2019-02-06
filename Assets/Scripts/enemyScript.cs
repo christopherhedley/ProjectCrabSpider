@@ -23,7 +23,7 @@ public class enemyScript : MonoBehaviour
     {
         StartCoroutine("DistanceCheckDelay");
 
-        if (target.position.y < 1.5 && inRange)
+        if (!playerScript.inSafeZone && inRange)
         {
             agent.speed = 10;
             agent.destination = target.position;
