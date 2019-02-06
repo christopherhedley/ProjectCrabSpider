@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class playerScript : MonoBehaviour {
 
@@ -12,23 +13,21 @@ public class playerScript : MonoBehaviour {
     public Image screenBlock2;
     public Image screenBlock3;
     private int spidersAttached = 0;
-    
-    
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown("1") && !paused)
+        if (Input.GetKeyUp(KeyCode.Escape) && !paused)
         {
             Time.timeScale = 0;
             paused = true;
             Debug.Log("paused");
         }
-        else if (Input.GetKeyDown("1") && paused)
+        else if (Input.GetKeyUp(KeyCode.Escape) && paused)
         {
             Time.timeScale = 1;
             paused = false;
