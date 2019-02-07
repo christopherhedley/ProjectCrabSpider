@@ -6,35 +6,14 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class playerScript : MonoBehaviour {
 
+    public GameManager g_manager;
     public static bool inSafeZone;
-    public static bool paused;
     public Text spiderAttachedText;
     public Image screenBlock1;
     public Image screenBlock2;
     public Image screenBlock3;
     private int spidersAttached = 0;
-
-    // Use this for initialization
-    void Start () {
-		
-	}
 	
-	// Update is called once per frame
-	void Update () {
-        if (Input.GetKeyUp(KeyCode.Escape) && !paused)
-        {
-            Time.timeScale = 0;
-            paused = true;
-            Debug.Log("paused");
-        }
-        else if (Input.GetKeyUp(KeyCode.Escape) && paused)
-        {
-            Time.timeScale = 1;
-            paused = false;
-            Debug.Log("unpaused");
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemy")
@@ -43,7 +22,6 @@ public class playerScript : MonoBehaviour {
             spiderAttachedText.text = "Spiders Attached: " + spidersAttached;
             Debug.Log(other.name);
             other.gameObject.SetActive(false);
-
 
             if (spidersAttached == 1)
             {
@@ -59,7 +37,7 @@ public class playerScript : MonoBehaviour {
             }
             if (spidersAttached == 4)
             {
-                // Trigger GAME OVER screen
+                g_manager.GameOver();
                 Debug.Log("GAME OVER");
             }
         }
@@ -68,6 +46,11 @@ public class playerScript : MonoBehaviour {
         {
             inSafeZone = true;
             Debug.Log("inSafeZone = " + inSafeZone);
+        }
+        if (other.tag == "Objective")
+        {
+            other.gameObject.SetActive(false);
+            Debug.Log("YOU WIN!");
         }
     }
 
@@ -84,5 +67,4 @@ public class playerScript : MonoBehaviour {
     {
         //if (spidersAttached == 1);
     }
-
 }

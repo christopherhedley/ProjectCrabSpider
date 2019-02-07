@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Safe Zone
+  - Objective
   layers:
   - Default
   - TransparentFX
