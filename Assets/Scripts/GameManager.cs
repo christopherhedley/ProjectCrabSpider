@@ -9,8 +9,10 @@ public class GameManager : MonoBehaviour {
     public static bool paused;
     public Text gameTimerText;
     public Text gameOverText;
+    public Text youWinText;
     public GameObject pausePanel;
     public GameObject gameOverPanel;
+    public GameObject youWinPanel;
     public float gameTimer = 60f;
     private bool gameOver = false;
 
@@ -18,6 +20,7 @@ public class GameManager : MonoBehaviour {
     {
         pausePanel.SetActive(false);
         gameOverPanel.SetActive(false);
+        youWinPanel.SetActive(false);
         Time.timeScale = 1;
         paused = false;
     }
@@ -72,10 +75,10 @@ public class GameManager : MonoBehaviour {
 
     public void RestartLevel()
     {
-        StartCoroutine(LoadYourAsyncScene());
+        StartCoroutine(LoadYourLevel());
     }
 
-    IEnumerator LoadYourAsyncScene()
+    IEnumerator LoadYourLevel()
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Level_0");
 
@@ -88,13 +91,34 @@ public class GameManager : MonoBehaviour {
 
     public void QuitGame()
     {
-        Application.Quit();
+        StartCoroutine(LoadYourMenu());
         Debug.Log("Quitting Application...");
+    }
+
+    IEnumerator LoadYourMenu()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MainMenu");
+
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
     }
 
     public void GameOver()
     {
         gameOverPanel.SetActive(true);
+        Time.timeScale = 0;
+        paused = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void YouWin()
+    {
+        youWinText.text = "You survived with " + Mathf.Round(gameTimer) + " seconds remaining";
+        youWinPanel.SetActive(true);
         Time.timeScale = 0;
         paused = true;
         Cursor.lockState = CursorLockMode.None;
