@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour {
 
@@ -11,13 +12,18 @@ public class GameManager : MonoBehaviour {
     public Text gameOverText;
     public Text youWinText;
     public GameObject pausePanel;
+    public GameObject pausePanelResumeButton;
     public GameObject gameOverPanel;
+    public GameObject gameOverPanelRestartButton;
     public GameObject youWinPanel;
+    public GameObject youWinPanelRestartButton;
     public float gameTimer = 60f;
     private bool gameOver = false;
+    EventSystem m_EventSystem;
 
     void Awake()
     {
+        m_EventSystem = EventSystem.current;
         pausePanel.SetActive(false);
         gameOverPanel.SetActive(false);
         youWinPanel.SetActive(false);
@@ -29,11 +35,11 @@ public class GameManager : MonoBehaviour {
     {
         if (!gameOver)
         {
-            if (Input.GetKeyUp(KeyCode.Escape) && !paused)
+            if (Input.GetButtonUp("Cancel") && !paused)
             {
                 Pause();
             }
-            else if (Input.GetKeyUp(KeyCode.Escape) && paused)
+            else if (Input.GetButtonUp("Cancel") && paused)
             {
                 unPause();
             }
@@ -62,6 +68,7 @@ public class GameManager : MonoBehaviour {
         Time.timeScale = 0;
         paused = true;
         pausePanel.SetActive(true);
+        m_EventSystem.SetSelectedGameObject(pausePanelResumeButton);
         Debug.Log("paused");
     }
 
@@ -109,6 +116,7 @@ public class GameManager : MonoBehaviour {
     public void GameOver()
     {
         gameOverPanel.SetActive(true);
+        m_EventSystem.SetSelectedGameObject(pausePanelResumeButton);
         Time.timeScale = 0;
         paused = true;
         Cursor.lockState = CursorLockMode.None;
@@ -119,6 +127,7 @@ public class GameManager : MonoBehaviour {
     {
         youWinText.text = "You survived with " + Mathf.Round(gameTimer) + " seconds remaining";
         youWinPanel.SetActive(true);
+        m_EventSystem.SetSelectedGameObject(youWinPanelRestartButton);
         Time.timeScale = 0;
         paused = true;
         Cursor.lockState = CursorLockMode.None;

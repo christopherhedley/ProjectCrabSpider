@@ -9,6 +9,9 @@ public class playerScript : MonoBehaviour {
     public GameManager g_manager;
     public static bool inSafeZone;
     public Text spiderAttachedText;
+    public Text pressEText;
+    public Text pressFText;
+    public Slider spiderSlider;
     public Image screenBlock1;
     public Image screenBlock2;
     public Image screenBlock3;
@@ -31,12 +34,6 @@ public class playerScript : MonoBehaviour {
             inSafeZone = true;
             Debug.Log("inSafeZone = " + inSafeZone);
         }
-        if (other.tag == "Objective")
-        {
-            other.gameObject.SetActive(false);
-            g_manager.YouWin();
-            Debug.Log("YOU WIN!");
-        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -46,25 +43,47 @@ public class playerScript : MonoBehaviour {
             inSafeZone = false;
             Debug.Log("inSafeZone = " + inSafeZone);
         }
+
+        if (other.tag == "Objective")
+        {
+            pressFText.gameObject.SetActive(false);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Objective")
+        {
+            pressFText.gameObject.SetActive(true);
+            if (Input.GetButtonDown("Pull"))
+            {
+                other.gameObject.SetActive(false);
+                g_manager.YouWin();
+                Debug.Log("YOU WIN!");
+            }
+        }
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetButtonDown("Shake"))
         {
             removingSpiders = true;
             Debug.Log("Holding E");
         }
-        if (Input.GetKeyUp(KeyCode.E))
+        if (Input.GetButtonUp("Shake"))
         {
             removingSpiders = false;
             removingSpidersTimer = 2f;
+            spiderSlider.gameObject.SetActive(false);
             Debug.Log("Released E");
         }
 
         if (removingSpiders && removingSpidersTimer > 0 && spidersAttached > 0)
         {
             removingSpidersTimer -= Time.deltaTime;
+            spiderSlider.gameObject.SetActive(true);
+            spiderSlider.value = removingSpidersTimer;
         }
 
         if (removingSpidersTimer <= 0)
@@ -83,6 +102,8 @@ public class playerScript : MonoBehaviour {
             screenBlock1.gameObject.SetActive(false);
             screenBlock2.gameObject.SetActive(false);
             screenBlock3.gameObject.SetActive(false);
+            spiderSlider.gameObject.SetActive(false);
+            pressEText.gameObject.SetActive(false);
         }
 
         if (spidersAttached == 1)
@@ -90,6 +111,7 @@ public class playerScript : MonoBehaviour {
             screenBlock1.gameObject.SetActive(true);
             screenBlock2.gameObject.SetActive(false);
             screenBlock3.gameObject.SetActive(false);
+            pressEText.gameObject.SetActive(true);
         }
         if (spidersAttached == 2)
         {
