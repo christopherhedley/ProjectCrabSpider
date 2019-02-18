@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour {
     public GameObject youWinPanelRestartButton;
     public float gameTimer = 60f;
     private bool gameOver = false;
+    private GameObject storeSelected;
     EventSystem m_EventSystem;
 
     void Awake()
@@ -29,10 +30,24 @@ public class GameManager : MonoBehaviour {
         youWinPanel.SetActive(false);
         Time.timeScale = 1;
         paused = false;
+        storeSelected = m_EventSystem.firstSelectedGameObject;
+        Debug.Log(Input.GetJoystickNames().Length);
     }
 
     void Update()
     {
+        /*if (m_EventSystem.currentSelectedGameObject != storeSelected)
+        {
+            if (m_EventSystem.currentSelectedGameObject == null)
+            {
+                m_EventSystem.SetSelectedGameObject(storeSelected);
+            }
+            else
+            {
+                storeSelected = m_EventSystem.currentSelectedGameObject;
+            }
+        }*/
+
         if (!gameOver)
         {
             if (Input.GetButtonUp("Cancel") && !paused)
@@ -53,7 +68,6 @@ public class GameManager : MonoBehaviour {
         {
             gameOverText.text = "You ran out of time!";
             GameOver();
-            gameOver = true;
             Debug.Log("GAME OVER: YOU RAN OUT OF TIME");
         }
     }
@@ -115,12 +129,16 @@ public class GameManager : MonoBehaviour {
 
     public void GameOver()
     {
+        gameOver = true;
         gameOverPanel.SetActive(true);
-        m_EventSystem.SetSelectedGameObject(pausePanelResumeButton);
+        m_EventSystem.SetSelectedGameObject(gameOverPanelRestartButton);
         Time.timeScale = 0;
         paused = true;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        if (Input.GetJoystickNames().Length == 0)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
     public void YouWin()
@@ -130,8 +148,11 @@ public class GameManager : MonoBehaviour {
         m_EventSystem.SetSelectedGameObject(youWinPanelRestartButton);
         Time.timeScale = 0;
         paused = true;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        if (Input.GetJoystickNames().Length == 0)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
 }

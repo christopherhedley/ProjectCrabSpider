@@ -79,7 +79,7 @@ public class playerScript : MonoBehaviour {
             Debug.Log("Released E");
         }
 
-        if (removingSpiders && removingSpidersTimer > 0 && spidersAttached > 0)
+        if (removingSpiders && removingSpidersTimer > 0 && spidersAttached > 0 && Time.timeScale == 1)
         {
             removingSpidersTimer -= Time.deltaTime;
             spiderSlider.gameObject.SetActive(true);
