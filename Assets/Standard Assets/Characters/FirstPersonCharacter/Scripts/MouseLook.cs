@@ -75,7 +75,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void InternalLockUpdate()
         {
-            if(Input.GetButtonUp("Cancel") && Input.GetJoystickNames().Length == 0)
+            if(Input.GetButtonUp("Cancel"))
             {
                 m_cursorIsLocked = false;
             }

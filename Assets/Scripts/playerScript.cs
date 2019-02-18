@@ -19,6 +19,13 @@ public class playerScript : MonoBehaviour {
     private int spidersAttached = 0;
     private bool removingSpiders = false;
 
+    private void Start()
+    {
+        pressEText.gameObject.SetActive(false);
+        pressFText.gameObject.SetActive(false);
+        spiderSlider.gameObject.SetActive(false);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemy")
@@ -57,7 +64,9 @@ public class playerScript : MonoBehaviour {
             pressFText.gameObject.SetActive(true);
             if (Input.GetButtonDown("Pull"))
             {
-                other.gameObject.SetActive(false);
+                pressEText.gameObject.SetActive(false);
+                pressFText.gameObject.SetActive(false);
+                spiderSlider.gameObject.SetActive(false);
                 g_manager.YouWin();
                 Debug.Log("YOU WIN!");
             }
@@ -124,6 +133,9 @@ public class playerScript : MonoBehaviour {
         }
         if (spidersAttached == 4)
         {
+            pressEText.gameObject.SetActive(false);
+            pressFText.gameObject.SetActive(false);
+            spiderSlider.gameObject.SetActive(false);
             g_manager.GameOver();
             Debug.Log("GAME OVER");
         }

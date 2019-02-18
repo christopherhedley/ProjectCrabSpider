@@ -134,11 +134,8 @@ public class GameManager : MonoBehaviour {
         m_EventSystem.SetSelectedGameObject(gameOverPanelRestartButton);
         Time.timeScale = 0;
         paused = true;
-        if (Input.GetJoystickNames().Length == 0)
-        {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-        }
     }
 
     public void YouWin()
@@ -148,11 +145,8 @@ public class GameManager : MonoBehaviour {
         m_EventSystem.SetSelectedGameObject(youWinPanelRestartButton);
         Time.timeScale = 0;
         paused = true;
-        if (Input.GetJoystickNames().Length == 0)
-        {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-        }
     }
 
 }
