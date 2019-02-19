@@ -42,8 +42,12 @@ public class playerScript : MonoBehaviour {
             inSafeZone = true;
             Debug.Log("inSafeZone = " + inSafeZone);
         }
-    }
 
+        if (other.tag == "Objective")
+        {
+            pressFText.gameObject.SetActive(true);
+        }
+    }
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Safe Zone")
@@ -62,9 +66,9 @@ public class playerScript : MonoBehaviour {
     {
         if (other.tag == "Objective")
         {
-            pressFText.gameObject.SetActive(true);
             if (Input.GetButtonDown("Pull"))
             {
+                pressFText.gameObject.SetActive(false);
                 anim.SetBool("PlayerNear", true);
                 StartCoroutine("leverDelay");
             }

@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour {
     public Text gameTimerText;
     public GameObject gameOverTimerImage;
     public GameObject gameOverScrabsImage;
-    public Text youWinText;
     public GameObject pausePanel;
     public GameObject pausePanelResumeButton;
     public GameObject gameOverPanel;
@@ -20,7 +19,6 @@ public class GameManager : MonoBehaviour {
     public GameObject youWinPanelRestartButton;
     public float gameTimer = 60f;
     private bool gameOver = false;
-    private GameObject storeSelected;
     EventSystem m_EventSystem;
 
     void Awake()
@@ -31,24 +29,12 @@ public class GameManager : MonoBehaviour {
         youWinPanel.SetActive(false);
         Time.timeScale = 1;
         paused = false;
-        storeSelected = m_EventSystem.firstSelectedGameObject;
         Debug.Log(Input.GetJoystickNames().Length);
+        YouWin();
     }
 
     void Update()
     {
-        /*if (m_EventSystem.currentSelectedGameObject != storeSelected)
-        {
-            if (m_EventSystem.currentSelectedGameObject == null)
-            {
-                m_EventSystem.SetSelectedGameObject(storeSelected);
-            }
-            else
-            {
-                storeSelected = m_EventSystem.currentSelectedGameObject;
-            }
-        }*/
-
         if (!gameOver)
         {
             if (Input.GetButtonUp("Cancel") && !paused)
@@ -154,7 +140,6 @@ public class GameManager : MonoBehaviour {
     public void YouWin()
     {
         gameOver = true;
-        youWinText.text = "You survived with " + Mathf.Round(gameTimer) + " seconds remaining";
         youWinPanel.SetActive(true);
         Time.timeScale = 0;
         paused = true;
