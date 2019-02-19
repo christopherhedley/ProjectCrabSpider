@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class MenuScript : MonoBehaviour {
 
     public GameObject mainPanel;
+    public GameObject mainPanelStartButton;
     public GameObject mainPanelCreditsButton;
     public GameObject creditPanel;
     public GameObject creditsPanelBackButton;
@@ -14,6 +15,10 @@ public class MenuScript : MonoBehaviour {
 
     public void Awake()
     {
+        if (Input.GetJoystickNames().Length > 0)
+        {
+            m_EventSystem.SetSelectedGameObject(mainPanelStartButton);
+        }
         m_EventSystem = EventSystem.current;
         mainPanel.SetActive(true);
         creditPanel.SetActive(false);
@@ -46,14 +51,20 @@ public class MenuScript : MonoBehaviour {
     {
         mainPanel.SetActive(false);
         creditPanel.SetActive(true);
-        m_EventSystem.SetSelectedGameObject(creditsPanelBackButton);
+        if (Input.GetJoystickNames().Length > 0)
+        {
+            m_EventSystem.SetSelectedGameObject(creditsPanelBackButton);
+        }
     }
 
     public void MainMenu()
     {
         mainPanel.SetActive(true);
         creditPanel.SetActive(false);
-        m_EventSystem.SetSelectedGameObject(mainPanelCreditsButton);
+        if (Input.GetJoystickNames().Length > 0)
+        {
+            m_EventSystem.SetSelectedGameObject(mainPanelCreditsButton);
+        }
     }
 
 

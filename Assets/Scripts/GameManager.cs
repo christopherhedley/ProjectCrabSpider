@@ -67,7 +67,10 @@ public class GameManager : MonoBehaviour {
         Time.timeScale = 0;
         paused = true;
         pausePanel.SetActive(true);
-        m_EventSystem.SetSelectedGameObject(pausePanelResumeButton);
+        if (Input.GetJoystickNames().Length > 0)
+        {
+            m_EventSystem.SetSelectedGameObject(pausePanelResumeButton);
+        }
         Debug.Log("paused");
     }
 
