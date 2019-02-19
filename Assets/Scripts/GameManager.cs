@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour {
 
     public static bool paused;
     public Text gameTimerText;
-    public Text gameOverText;
+    public GameObject gameOverTimerImage;
+    public GameObject gameOverScrabsImage;
     public Text youWinText;
     public GameObject pausePanel;
     public GameObject pausePanelResumeButton;
@@ -66,7 +67,6 @@ public class GameManager : MonoBehaviour {
         }
         else if (!gameOver)
         {
-            gameOverText.text = "You ran out of time!";
             GameOver();
             Debug.Log("GAME OVER: YOU RAN OUT OF TIME");
         }
@@ -138,6 +138,16 @@ public class GameManager : MonoBehaviour {
         if (Input.GetJoystickNames().Length > 0)
         {
             m_EventSystem.SetSelectedGameObject(gameOverPanelRestartButton);
+        }
+        if (gameTimer <= 0)
+        {
+            gameOverTimerImage.SetActive(true);
+            gameOverScrabsImage.SetActive(false);
+        }
+        else
+        {
+            gameOverTimerImage.SetActive(false);
+            gameOverScrabsImage.SetActive(true);
         }
     }
 
