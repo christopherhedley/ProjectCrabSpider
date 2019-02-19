@@ -30,7 +30,6 @@ public class GameManager : MonoBehaviour {
         Time.timeScale = 1;
         paused = false;
         Debug.Log(Input.GetJoystickNames().Length);
-        YouWin();
     }
 
     void Update()
