@@ -131,22 +131,29 @@ public class GameManager : MonoBehaviour {
     {
         gameOver = true;
         gameOverPanel.SetActive(true);
-        m_EventSystem.SetSelectedGameObject(gameOverPanelRestartButton);
         Time.timeScale = 0;
         paused = true;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        if (Input.GetJoystickNames().Length > 0)
+        {
+            m_EventSystem.SetSelectedGameObject(gameOverPanelRestartButton);
+        }
     }
 
     public void YouWin()
     {
+        gameOver = true;
         youWinText.text = "You survived with " + Mathf.Round(gameTimer) + " seconds remaining";
         youWinPanel.SetActive(true);
-        m_EventSystem.SetSelectedGameObject(youWinPanelRestartButton);
         Time.timeScale = 0;
         paused = true;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        if (Input.GetJoystickNames().Length > 0)
+        {
+            m_EventSystem.SetSelectedGameObject(youWinPanelRestartButton);
+        }
     }
 
 }

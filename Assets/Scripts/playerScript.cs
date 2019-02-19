@@ -18,6 +18,7 @@ public class playerScript : MonoBehaviour {
     public float removingSpidersTimer = 2f;
     private int spidersAttached = 0;
     private bool removingSpiders = false;
+    public Animator anim;
 
     private void Start()
     {
@@ -64,13 +65,20 @@ public class playerScript : MonoBehaviour {
             pressFText.gameObject.SetActive(true);
             if (Input.GetButtonDown("Pull"))
             {
-                pressEText.gameObject.SetActive(false);
-                pressFText.gameObject.SetActive(false);
-                spiderSlider.gameObject.SetActive(false);
-                g_manager.YouWin();
-                Debug.Log("YOU WIN!");
+                anim.SetBool("PlayerNear", true);
+                StartCoroutine("leverDelay");
             }
         }
+    }
+
+    IEnumerator leverDelay()
+    {
+        yield return new WaitForSeconds(1.2f);
+        pressEText.gameObject.SetActive(false);
+        pressFText.gameObject.SetActive(false);
+        spiderSlider.gameObject.SetActive(false);
+        g_manager.YouWin();
+        Debug.Log("YOU WIN!");
     }
 
     private void Update()
