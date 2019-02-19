@@ -372,7 +372,7 @@ MonoBehaviour:
   m_Script: {fileID: -619905303, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1938561091}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &371006408
@@ -404,7 +404,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &471630674
 RectTransform:
   m_ObjectHideFlags: 0
@@ -570,7 +570,7 @@ GameObject:
   - component: {fileID: 666366190}
   - component: {fileID: 666366189}
   m_Layer: 5
-  m_Name: Credits Button
+  m_Name: Credits Return To Menu Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1723,7 +1723,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainPanel: {fileID: 471630673}
+  mainPanelCreditsButton: {fileID: 1139401921}
   creditPanel: {fileID: 1156812874}
+  creditsPanelBackButton: {fileID: 666366187}
 --- !u!4 &1962276152
 Transform:
   m_ObjectHideFlags: 0

@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class MenuScript : MonoBehaviour {
 
     public GameObject mainPanel;
+    public GameObject mainPanelCreditsButton;
     public GameObject creditPanel;
+    public GameObject creditsPanelBackButton;
+    EventSystem m_EventSystem;
 
     public void Awake()
     {
+        m_EventSystem = EventSystem.current;
         mainPanel.SetActive(true);
         creditPanel.SetActive(false);
     }
@@ -41,12 +46,14 @@ public class MenuScript : MonoBehaviour {
     {
         mainPanel.SetActive(false);
         creditPanel.SetActive(true);
+        m_EventSystem.SetSelectedGameObject(creditsPanelBackButton);
     }
 
     public void MainMenu()
     {
         mainPanel.SetActive(true);
         creditPanel.SetActive(false);
+        m_EventSystem.SetSelectedGameObject(mainPanelCreditsButton);
     }
 
 
